@@ -50,10 +50,7 @@ app.use(session({
     resave:false,
     saveUninitialized:false,
     cookie: {
-       maxAge:1000*60*60,
-       secure: true, // Ensure this is true if you're using HTTPS
-       sameSite: 'none', // Allow cross-origin cookies
-       domain: 'https://tasker-client-beige.vercel.app'
+       maxAge:1000*60*60
     }
 }))
 app.use(passport.initialize())
@@ -113,12 +110,7 @@ app.get("/",(req,res)=>{
 })
 
 app.get("/api",(req,res)=>{
-    try{
-        res.json({names:req.user.name})
-    }catch(error){
-        console.log(`error=${error}`)
-        res.status(500).json({error:"internalll severrr error"})
-    }
+    res.json({names:req.user.name})
 })
 
 app.post("/api/form",async(req,res)=>{
