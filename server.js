@@ -50,7 +50,8 @@ app.use(session({
     resave:false,
     saveUninitialized:false,
     cookie: {
-       maxAge:1000*60*60
+       maxAge:1000*60*60,
+       secure: true,
     }
 }))
 app.use(passport.initialize())
@@ -110,7 +111,11 @@ app.get("/",(req,res)=>{
 })
 
 app.get("/api",(req,res)=>{
-    res.json({names:req.user.name})
+   try{
+        res.json({names:req.user.name})
+   }catch(error){
+    console.log(error)
+   }
 })
 
 app.post("/api/form",async(req,res)=>{
@@ -210,7 +215,7 @@ app.use("/api",google)
 
 app.listen(port, '0.0.0.0', () => {
     console.log(`Server is running on port ${port}`);
-  });
+});
 
 
 
