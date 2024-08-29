@@ -3,7 +3,7 @@ if(process.env.NODE_ENV!=="production"){
     require('dotenv').config()
 }
 const reactURL=process.env.REACT_URL
-const allowedOrigins=['https://task-backend-7r94.onrender.com','https://task-backend-7r94.onrender.com/login','https://task-backend-7r94.onrender.com/home']
+const allowedOrigins=['https://tasker-client-beige.vercel.app','https://tasker-client-beige.vercel.app/login','https://tasker-client-beige.vercel.app/home']
 
 const cors=require('cors')
 const corsOptions = {
@@ -53,7 +53,7 @@ app.use(session({
        maxAge:1000*60*60,
        secure: true, // Ensure this is true if you're using HTTPS
        sameSite: 'none', // Allow cross-origin cookies
-       domain: 'https://task-backend-7r94.onrender.com'
+       domain: 'https://tasker-client-beige.vercel.app'
     }
 }))
 app.use(passport.initialize())
