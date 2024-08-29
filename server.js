@@ -25,7 +25,7 @@ const express= require('express');
 const pathh=require('path')
 const collection=require('./config')
 const app=express();
-const port=3050;
+const port=process.env.PORT || 3050;
 const initializePassport=require('./config-passport');
 const passport=require('passport');
 const flash=require('express-flash')
@@ -216,7 +216,9 @@ app.use("/oauth",oauth)
 app.use("/api",google)
 
 
-
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Server is running on port ${port}`);
+  });
 
 
 
