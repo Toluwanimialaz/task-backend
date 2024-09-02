@@ -14,10 +14,10 @@ const corsOptions = {
           callback(new Error('Not allowed by CORS'));
         }
     },
-    methods: 'GET,POST,DELETE,OPTIONS', // Only allow specific methods
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Only allow specific methods
     allowedHeaders: ['Content-Type', 'Authorization','X-Requested-With'], // Allow specific headers
     credentials: true, // Allow cookies to be sent
-    optionsSuccessStatus: 200
+    optionsSuccessStatus: 204
 };
 
 const bodyParser=require('body-parser')
@@ -52,7 +52,7 @@ app.use(session({
     cookie: {
        maxAge:1000*60*60,
        secure: true,
-       sameSite:'lax'
+       sameSite:'None'
     }
 }))
 app.use(passport.initialize())
