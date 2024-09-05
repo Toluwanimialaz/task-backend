@@ -194,6 +194,20 @@ app.post("/login",notAuthenticated,passport.authenticate('local',{
     successRedirect:'https://tasker-client-beige.vercel.app/home' ,
     failureRedirect:'https://tasker-client-beige.vercel.app',
     failureFlash:true
+},(err,user,info)=>{
+    if (err) {
+        return res.status(500).json({ error: err.message });
+    }
+    if (!user) {
+        return res.status(401).json({ message: 'Invalid credentials' });
+    }
+    req.login(user, (err) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        console.log('User logged in:', req.user); // Should log the user object
+        return res.json({ message: 'Login successful' });
+    });
 }))
 
 app.delete("/logout",(req,res)=>{
