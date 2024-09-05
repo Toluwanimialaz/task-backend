@@ -36,12 +36,12 @@ const mongoStore=require('connect-mongo');
 const {bcrypt,bcryptVerify}=require('hash-wasm');
 const { Collection } = require('mongoose');
 
-app.use(cors(corsOptions))
+
 initializePassport(
     passport,
     async(username)=>await collection.findOne({name:username})
 )
-
+app.use(cors(corsOptions))
 app.use(bodyParser.json())
 app.set('views', pathh.join(__dirname, 'views'));
 app.set("view engine","ejs")
@@ -52,8 +52,8 @@ app.use(flash())
 app.use(session({
     store: mongoStore.create({ mongoUrl:process.env.MONGODB_URI}),
     secret:process.env.SESSION_SECRET,
-    resave:false,
-    saveUninitialized:false,
+    resave:true,
+    saveUninitialized:true,
     cookie: {
        maxAge:1000*60*60,
        secure: process.env.NODE_ENV === 'production',
