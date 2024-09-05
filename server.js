@@ -36,7 +36,7 @@ const mongoStore=require('connect-mongo');
 const {bcrypt,bcryptVerify}=require('hash-wasm');
 const { Collection } = require('mongoose');
 
-
+app.use(cors(corsOptions))
 app.use(bodyParser.json())
 app.set('views', pathh.join(__dirname, 'views'));
 app.set("view engine","ejs")
@@ -52,15 +52,14 @@ app.use(session({
     cookie: {
        maxAge:1000*60*60,
        secure: true,
-       sameSite:'None'
+       sameSite:'None',
+       httpOnly: true
+
     }
 }))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
-
-
-
 
 
 
