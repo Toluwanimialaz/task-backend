@@ -36,7 +36,7 @@ const mongoStore=require('connect-mongo');
 const {bcrypt,bcryptVerify}=require('hash-wasm');
 const { Collection } = require('mongoose');
 
-app.use(cors(corsOptions))
+
 app.use(bodyParser.json())
 app.set('views', pathh.join(__dirname, 'views'));
 app.set("view engine","ejs")
@@ -58,6 +58,13 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
+
+
+app.all('/*', function(req, res, next) {
+res.header('Access-Control-Allow-Origin', 'https://tasker-client-beige.vercel.app');
+res.header('Access-Control-Allow-Headers', 'Content-Type,accept,access_token,X-Requested-With');
+next();
+});
 
 
 
