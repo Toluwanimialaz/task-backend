@@ -60,11 +60,7 @@ app.use(passport.session())
 app.use(methodOverride('_method'))
 
 
-app.all('/*', function(req, res, next) {
-res.header('Access-Control-Allow-Origin', 'https://tasker-client-beige.vercel.app');
-res.header('Access-Control-Allow-Headers', 'Content-Type,accept,access_token,X-Requested-With');
-next();
-});
+
 
 
 
