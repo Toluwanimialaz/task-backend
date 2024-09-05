@@ -37,6 +37,11 @@ const {bcrypt,bcryptVerify}=require('hash-wasm');
 const { Collection } = require('mongoose');
 
 app.use(cors(corsOptions))
+initializePassport(
+    passport,
+    async(username)=>await collection.findOne({name:username})
+)
+
 app.use(bodyParser.json())
 app.set('views', pathh.join(__dirname, 'views'));
 app.set("view engine","ejs")
@@ -86,10 +91,6 @@ app.use((req, res, next) => {
 
 
 
-initializePassport(
-    passport,
-    async(username)=>await collection.findOne({name:username})
-)
 
 function auhenticated(req,res,next){
     if(req.isAuthenticated()){
