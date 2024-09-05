@@ -114,11 +114,13 @@ app.get("/",(req,res)=>{
 })
 
 app.get("/api",(req,res)=>{
-   try{
-        res.status(200).json({name:req.user.name})
-   }catch(error){
-    console.log(error)
-   }
+    console.log('Session:', req.session);
+    if (req.session.passport) {
+        console.log('User is authenticated:', req.session.passport.user);
+    } else {
+        console.log('No user in session');
+    }
+    res.json(req.session);
 })
 
 app.post("/api/form",async(req,res)=>{
