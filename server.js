@@ -115,7 +115,7 @@ app.get("/",(req,res)=>{
 
 app.get("/api",(req,res)=>{
    try{
-        res.json({names:req.user.name})
+        res.status(200).json({names:req.user.name})
    }catch(error){
     console.log(error)
    }
