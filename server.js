@@ -51,9 +51,8 @@ app.use(session({
     saveUninitialized:false,
     cookie: {
        maxAge:1000*60*60,
-       secure: true,
+       secure: process.env.NODE_ENV === 'production',
        sameSite:'None',
-       httpOnly: true
 
     }
 }))
@@ -115,7 +114,7 @@ app.get("/",(req,res)=>{
 
 app.get("/api",(req,res)=>{
    try{
-        res.status(200).json({names:'something'})
+        res.status(200).json({name:req.user.name})
    }catch(error){
     console.log(error)
    }
