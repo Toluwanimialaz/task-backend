@@ -3,8 +3,6 @@ if(process.env.NODE_ENV!=="production"){
     require('dotenv').config()
 }
 
-app.set('trust proxy', 1);
-
 
 const reactURL=process.env.REACT_URL
 const allowedOrigins=['https://tasker-client-beige.vercel.app','https://tasker-client-beige.vercel.app/login','https://tasker-client-beige.vercel.app/home']
@@ -29,6 +27,7 @@ const express= require('express');
 const pathh=require('path')
 const collection=require('./config')
 const app=express();
+app.set('trust proxy', 1);
 const port=process.env.PORT || 3050;
 const initializePassport=require('./config-passport');
 const passport=require('passport');
@@ -62,6 +61,7 @@ app.use(session({
        maxAge:1000*60*60*100,
        secure: process.env.NODE_ENV === 'production'?true:false,
        sameSite:'None',
+       httpOnly:process.env.NODE_ENV === 'production'?true:false,
 
     }
 }))
