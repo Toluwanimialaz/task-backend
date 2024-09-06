@@ -118,12 +118,16 @@ app.get("/",(req,res)=>{
 })
 
 app.get("/api",(req,res)=>{
-   try{
-        res.status(200).json({name:req.user.name})
-   }catch(error){
-    console.log(error)
-   }
+    if(req.isAuthenticated()){
+        res.json({names:req.user.name})
+    }else{
+        res.auth="false";
+        const truth=res.auth;
+        console.log(truth)
+        res.json({status:truth})
+    }
 })
+
 
 app.post("/api/form",async(req,res)=>{
     const date=req.body.date
