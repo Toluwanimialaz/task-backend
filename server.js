@@ -2,6 +2,10 @@ if(process.env.NODE_ENV!=="production"){
     console.log("ready to go in testing")
     require('dotenv').config()
 }
+
+app.set('trust proxy', 1);
+
+
 const reactURL=process.env.REACT_URL
 const allowedOrigins=['https://tasker-client-beige.vercel.app','https://tasker-client-beige.vercel.app/login','https://tasker-client-beige.vercel.app/home']
 
@@ -56,7 +60,7 @@ app.use(session({
     saveUninitialized:false,
     cookie: {
        maxAge:1000*60*60*100,
-       secure: process.env.NODE_ENV === 'production',
+       secure: process.env.NODE_ENV === 'production'?true:false,
        sameSite:'None',
 
     }
@@ -114,13 +118,11 @@ app.get("/",(req,res)=>{
 })
 
 app.get("/api",(req,res)=>{
-    console.log('Session:', req.session);
-    if (req.session.passport) {
-        console.log('User is authenticated:', req.session.passport.user);
-    } else {
-        console.log('No user in session');
-    }
-    res.json(req.session);
+   try{
+        res.status(200).json({name:req.user.name})
+   }catch(error){
+    console.log(error)
+   }
 })
 
 app.post("/api/form",async(req,res)=>{
@@ -190,22 +192,11 @@ app.post("/signup",notAuthenticated,async(req,res)=>{
 
 
 
-app.post("/login",notAuthenticated,passport.authenticate('local', (err, user, info) => {
-    if (err) {
-        return res.status(500).json({ error: err.message });
-    }
-    if (!user) {
-        return res.status(401).json({ message: 'Invalid credentials' });
-    }
-    req.logIn(user, (err) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
-        console.log('User logged in:', req.user); // Ensure req.user is populated
-        return res.json({ message: 'Login successful' });
-    });
-}));
-
+app.post("/login",notAuthenticated,passport.authenticate('local',{
+    successRedirect:'https://tasker-client-beige.vercel.app/home' ,
+    failureRedirect:'https://tasker-client-beige.vercel.app',
+    failureFlash:true
+}))
 
 app.delete("/logout",(req,res)=>{
     req.logOut((err)=>{
