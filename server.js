@@ -119,12 +119,12 @@ app.get("/",(req,res)=>{
 
 app.get("/api",(req,res)=>{
     if(req.isAuthenticated()){
-        res.json({names:req.user.name})
+        res.json({names:req.user.name,status:""})
     }else{
         res.auth="false";
         const truth=res.auth;
         console.log(truth)
-        res.json({status:truth})
+        res.json({names:"",status:truth})
     }
 })
 
