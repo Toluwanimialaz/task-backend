@@ -28,7 +28,7 @@ const pathh=require('path')
 const collection=require('./config')
 const app=express();
 app.set('trust proxy', 1);
-const port=process.env.PORT || 3050;
+const port=process.env.PORT || 3000;
 const initializePassport=require('./config-passport');
 const passport=require('passport');
 const flash=require('express-flash')
