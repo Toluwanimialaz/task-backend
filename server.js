@@ -5,7 +5,7 @@ if(process.env.NODE_ENV!=="production"){
 
 
 const reactURL=process.env.REACT_URL
-const allowedOrigins=['https://tasker-client-beige.vercel.app','https://tasker-client-beige.vercel.app/login','https://tasker-client-beige.vercel.app/home']
+const allowedOrigins=[reactURL,`${reactURL}/`,`${reactURL}/home`]
 
 const cors=require('cors')
 const corsOptions = {
@@ -58,7 +58,7 @@ app.use(session({
     resave:false,
     saveUninitialized:false,
     cookie: {
-       maxAge:1000*60*60*100,
+       maxAge:1000*60*60,
        secure: process.env.NODE_ENV === 'production'?true:false,
        sameSite:'None',
        httpOnly:process.env.NODE_ENV === 'production'?true:false,
@@ -189,7 +189,7 @@ app.post("/signup",notAuthenticated,async(req,res)=>{
         console.log(user.password)
         const userData=await collection.insertMany(user)
         console.log(userData)
-        res.redirect('https://tasker-client-beige.vercel.app/login')
+        res.redirect(`${reactURL}/login`)
     }
 })
 
@@ -197,8 +197,8 @@ app.post("/signup",notAuthenticated,async(req,res)=>{
 
 
 app.post("/login",notAuthenticated,passport.authenticate('local',{
-    successRedirect:'https://tasker-client-beige.vercel.app/home' ,
-    failureRedirect:'https://tasker-client-beige.vercel.app',
+    successRedirect:`${reactURL}/home` ,
+    failureRedirect:`${reactURL}`,
     failureFlash:true
 }))
 
